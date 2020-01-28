@@ -8,6 +8,7 @@ interval = 0.1
 def main(screen):
     global interval, old_time
 
+    curses.curs_set(0)
     screen.clear()
 
     height, width = screen.getmaxyx()
