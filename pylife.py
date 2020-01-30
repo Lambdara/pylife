@@ -12,14 +12,14 @@ def main(screen):
     screen.clear()
 
     height, width = screen.getmaxyx()
-    height, width = height - 1, width - 1
+    #height, width = height - 1, width - 1
 
     grid = [[randint(0,1) for _ in range(height)] for _ in range (width)]
 
     # Draw grid
     for x in range(width):
         for y in range(height):
-            screen.addstr(y, x, 'X' if grid[x][y] else ' ')
+            draw(screen,x,y,'X' if grid[x][y] else ' ')
 
     while True:
         old_time = time.time()
@@ -41,15 +41,22 @@ def main(screen):
         for x,y,value in updates:
             if value == 0:
                 grid[x][y] = 0
-                screen.addstr(y, x, ' ')
+                draw(screen,x,y,' ')
             else:
                 grid[x][y] = 1
-                screen.addstr(y, x, 'X')
+                draw(screen,x,y,'X')
 
         # Update screen and wait to get desired refresh rate
         screen.refresh()
         new_time = time.time()
         time.sleep(max(0, interval - new_time + old_time))
     screen.getkey()
+
+def draw(screen,x,y,c):
+    try:
+        screen.addstr(y, x, c)
+    except:
+        pass
+
 
 curses.wrapper(main)
