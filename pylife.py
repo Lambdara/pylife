@@ -22,6 +22,21 @@ def main(screen):
             draw(screen,x,y,'X' if grid[x][y] else ' ')
 
     while True:
+        # Resize if needed
+        height_current, width_current = screen.getmaxyx()
+        if height_current != height or width_current != width:
+            new_grid = []
+            for x in range(width_current):
+                new_column = []
+                for y in range(height_current):
+                    if y < height and x < width:
+                        new_column.append(grid[x][y])
+                    else:
+                        new_column.append(randint(0,1))
+                new_grid.append(new_column)
+            grid = new_grid
+            width, height = width_current, height_current
+
         old_time = time.time()
         # Update grid
         updates = []
